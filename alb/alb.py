@@ -5,11 +5,11 @@ elb= boto3.client('elbv2')
 load_balancer= elb.create_load_balancer(
     Name = 'test',
     Subnets = [
-        'subnet-0dcb0c34f00f5b45d',
-        'subnet-02caad7c757855768',
+        '<subnet-id-1>',
+        '<subnet-id-2>',
     ],
     SecurityGroups = [
-        'sg-095603a3e2678aca4',
+        '<security-group-1>',
     ],
     Type='application'
 )
@@ -18,23 +18,23 @@ tg = elb.create_target_group(
     Name = 'test-tg',
     Protocol = 'HTTP',
     Port = 80,
-    VpcId = 'vpc-0519d6821089bfbe0'
+    VpcId = '<vpc-id-1>'
 )
 
 register = elb.register_targets(
-    TargetGroupArn = 'arn:aws:elasticloadbalancing:ap-south-1:851725512255:targetgroup/test-tg/81fbd6a826b4c437',
+    TargetGroupArn = '<target-group-arn-1>',
     Targets = [
         {
-            'Id' : 'i-0104ddce9afc52d12'
+            'Id' : '<ec2-instance-id>'
         },
     ]
 )
 
 listener = elb.create_listener(
-    LoadBalancerArn = 'arn:aws:elasticloadbalancing:ap-south-1:851725512255:loadbalancer/app/test/a7dadb2e7d789457',
+    LoadBalancerArn = '<load-balancer-arn>',
     DefaultActions = [
         {
-            'TargetGroupArn': 'arn:aws:elasticloadbalancing:ap-south-1:851725512255:targetgroup/test-tg/81fbd6a826b4c437',
+            'TargetGroupArn': '<target-group-arn>',
             'Type' : 'forward'
         },
     ],
